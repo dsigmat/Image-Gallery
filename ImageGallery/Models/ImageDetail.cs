@@ -27,8 +27,9 @@ namespace ImageGallery.Models
         [Display(Name = "Size")]
         public long Size { get; set; }
 
-
+        //внешний ключ
         public int CategoryId { get; set; }
+        //навигационное свойство 
         public Category Category { get; set; }
     }
 }

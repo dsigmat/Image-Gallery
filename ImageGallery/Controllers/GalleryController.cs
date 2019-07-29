@@ -14,6 +14,19 @@ namespace ImageGallery.Controllers
 {
     public class GalleryController : Controller
     {
+            //В объявлении поля readonly указывает на то, что присвоение значения полю может 
+            //происходить только при объявлении или в конструкторе этого класса.
+            //Полю только для чтения можно несколько раз назначить значения в объявлении 
+            //поля и в конструкторе.
+            //Поле readonly нельзя изменять после выхода из конструктора.Это влечет за собой разные 
+            //последствия для типов значений и ссылочных типов.
+            //Поскольку типы значений содержат данные, поле readonly с типом значения является 
+            //неизменяемым.
+            //Ссылочные типы содержат только ссылку на соответствующие данные, а значит поле 
+            //readonly ссылочного типа будет всегда ссылаться на один объект.Но сам этот 
+            //объект не является неизменяемым. Модификатор readonly запрещает замену 
+            //поля другим экземпляром ссылочного типа.Но этот модификатор не препятствует 
+            //изменению данных экземпляра, на которое ссылается поле только для чтения, в том числе через это поле.
         private readonly ApplicationDbContext _context;
         private readonly IUploadInterface _upload;
 
@@ -26,8 +39,10 @@ namespace ImageGallery.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //OrderByDescending - эта операции прототипирована и ведет себя подобно операции OrderBy, но с тем отличием, что упорядочивает по убыванию.
-            var getDetailPicture = _context.ImageDetail.Include(i => i.Category).ToList().OrderByDescending(a => a.ReleaseDate);
+            //OrderByDescending - эта операции прототипирована и ведет себя подобно 
+            //операции OrderBy, но с тем отличием, что упорядочивает по убыванию.
+            var getDetailPicture = _context.ImageDetail.Include(i => i.Category)
+                .ToList().OrderByDescending(a => a.ReleaseDate);
             return View(getDetailPicture);
         }
 
@@ -37,9 +52,12 @@ namespace ImageGallery.Controllers
         {
             var image = from i in _context.ImageDetail.Include(p => p.Category)
             select i;
-            //Операция Contains возвращает true, если любой элемент входной последовательности соответствует указанному значению. 
+             
             if (!String.IsNullOrEmpty(searchString))
             {
+                //Операция Where используется для фильтрации элементов
+                //Операция Contains возвращает true, если любой элемент 
+                //входной последовательности соответствует указанному значению.
                 image = image.Where(s => s.ImageName.Contains(searchString));
             }
 

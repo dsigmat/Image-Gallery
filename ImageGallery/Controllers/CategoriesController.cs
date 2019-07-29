@@ -58,10 +58,16 @@ namespace ImageGallery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description")] Category category)
         {
+            //Объект ModelState сохраняет все значения, которые пользователь ввел для свойств модели, 
+            //а также все ошибки, связанные с каждым свойством и с моделью в целом. 
+            //Если в объекте ModelState имеются какие-нибудь ошибки, то свойство ModelState.IsValid возвратит false
             if (ModelState.IsValid)
             {
                 _context.Add(category);
+                //Для сохранения результатов в базе данных в асинхронном режиме используется метод SaveChangesAsync.
                 await _context.SaveChangesAsync();
+                //RedirectToAction позволяет перейти к определенному действию определенного контроллера. 
+                //Он также позволяет задать передаваемые параметры
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
@@ -138,6 +144,11 @@ namespace ImageGallery.Controllers
 
         // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
+
+        //Фильтр ValidateAntiforgeryToken предназначен для противодействия подделке 
+        //межсайтовых запросов, производя верификацию токенов при обращении к методу. 
+        //Наиболее частым случаем является применение данного фильтра к методам, отвечающим 
+        //за авторизацию
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
