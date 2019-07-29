@@ -26,6 +26,7 @@ namespace ImageGallery.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            //OrderByDescending - эта операции прототипирована и ведет себя подобно операции OrderBy, но с тем отличием, что упорядочивает по убыванию.
             var getDetailPicture = _context.ImageDetail.Include(i => i.Category).ToList().OrderByDescending(a => a.ReleaseDate);
             return View(getDetailPicture);
         }
@@ -36,7 +37,7 @@ namespace ImageGallery.Controllers
         {
             var image = from i in _context.ImageDetail.Include(p => p.Category)
             select i;
-
+            //Операция Contains возвращает true, если любой элемент входной последовательности соответствует указанному значению. 
             if (!String.IsNullOrEmpty(searchString))
             {
                 image = image.Where(s => s.ImageName.Contains(searchString));
@@ -48,6 +49,7 @@ namespace ImageGallery.Controllers
 
 
         [HttpGet]
+        //Объект типа IActionResult, которые непосредственно предназначены для генерации результата действия.
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

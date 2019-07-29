@@ -8,6 +8,7 @@ namespace ImageGallery.Models
 {
     public class ImageDetail
     {
+        //данные предоставляются пользователю для заполнения
         public int Id { get; set; }
 
         [Display(Name = "Name")]
