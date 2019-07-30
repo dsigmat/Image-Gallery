@@ -17,6 +17,7 @@ namespace ImageGallery.Controllers
         }
 
         [HttpGet]
+        //вывожу форму представления авторизации
         public IActionResult Login()
         {
             return View(new LoginViewModel());

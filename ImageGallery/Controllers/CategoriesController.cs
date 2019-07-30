@@ -96,6 +96,7 @@ namespace ImageGallery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Category category)
         {
+            //оператор выбора
             if (id != category.Id)
             {
                 return NotFound();
@@ -103,6 +104,7 @@ namespace ImageGallery.Controllers
 
             if (ModelState.IsValid)
             {
+                //оператор исключения
                 try
                 {
                     _context.Update(category);
@@ -133,6 +135,7 @@ namespace ImageGallery.Controllers
             }
 
             var category = await _context.Categories
+                //FirstOrDefaultAsync: получение первого элемента или значения по умолчанию
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {

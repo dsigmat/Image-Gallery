@@ -15,6 +15,7 @@ namespace ImageGallery.Controllers
             return View();
         }
 
+        //выводиться информация по политики конфиденциальности
         public IActionResult Privacy()
         {
             return View();

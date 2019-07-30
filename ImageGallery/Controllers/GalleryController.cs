@@ -43,6 +43,7 @@ namespace ImageGallery.Controllers
             //операции OrderBy, но с тем отличием, что упорядочивает по убыванию.
             var getDetailPicture = _context.ImageDetail.Include(i => i.Category)
                 .ToList().OrderByDescending(a => a.ReleaseDate);
+            //оператор перехода
             return View(getDetailPicture);
         }
 
@@ -53,6 +54,8 @@ namespace ImageGallery.Controllers
             var image = from i in _context.ImageDetail.Include(p => p.Category)
             select i;
              
+            //оператор выбора
+            //если текст не пустой
             if (!String.IsNullOrEmpty(searchString))
             {
                 //Операция Where используется для фильтрации элементов
@@ -60,7 +63,7 @@ namespace ImageGallery.Controllers
                 //входной последовательности соответствует указанному значению.
                 image = image.Where(s => s.ImageName.Contains(searchString));
             }
-
+            //оператор перехода
             return View(await image.ToListAsync());
 
         }
@@ -68,8 +71,12 @@ namespace ImageGallery.Controllers
 
         [HttpGet]
         //Объект типа IActionResult, которые непосредственно предназначены для генерации результата действия.
+
+        //Отличие int? от простого int в том, что он может принимать еще одно значение - null. 
+        //Это удобно, например, при извлечении данных из базы, где значения могут быть неопределенными.
         public async Task<IActionResult> Details(int? id)
         {
+            //оператор выбора
             if (id == null)
             {
                 return NotFound();
@@ -77,7 +84,9 @@ namespace ImageGallery.Controllers
 
             var pictureDetail = await _context.ImageDetail
                 .Include(p => p.Category)
+                //FirstOrDefaultAsync: получение первого элемента или значения по умолчанию
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (pictureDetail == null)
             {
                 return NotFound();

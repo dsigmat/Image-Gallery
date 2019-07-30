@@ -40,13 +40,18 @@ namespace ImageGallery.FileUploadControl
             }
         }
 
+        //здесь получаю путь и имя файла
         private string GetpathAndFileName(string filename)
         {
+            //получаю путь до каталога
             string path = _hostingEnvironment.WebRootPath + "\\uploads\\";
+            //оператор выбора
             if (!Directory.Exists(path))
             {
+                //если нет дериктории то создаю
                 Directory.CreateDirectory(path);
             }
+            //оператор перехода
             return path + filename;
         }
     }
