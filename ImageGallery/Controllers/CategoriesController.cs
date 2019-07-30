@@ -30,6 +30,7 @@ namespace ImageGallery.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            //оператор выбора
             if (id == null)
             {
                 return NotFound();
@@ -37,6 +38,8 @@ namespace ImageGallery.Controllers
 
             var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            //оператор выбора
             if (category == null)
             {
                 return NotFound();
@@ -76,12 +79,15 @@ namespace ImageGallery.Controllers
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            //оператор выбора
             if (id == null)
             {
                 return NotFound();
             }
 
             var category = await _context.Categories.FindAsync(id);
+
+            //оператор выбора
             if (category == null)
             {
                 return NotFound();
@@ -129,8 +135,10 @@ namespace ImageGallery.Controllers
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            //оператор выбора
             if (id == null)
             {
+                //оператор перехода
                 return NotFound();
             }
 
@@ -139,6 +147,7 @@ namespace ImageGallery.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
+                //оператор перехода
                 return NotFound();
             }
 
@@ -158,11 +167,13 @@ namespace ImageGallery.Controllers
             var category = await _context.Categories.FindAsync(id);
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
+            //оператор перехода
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoryExists(int id)
         {
+            //оператор перехода
             return _context.Categories.Any(e => e.Id == id);
         }
     }

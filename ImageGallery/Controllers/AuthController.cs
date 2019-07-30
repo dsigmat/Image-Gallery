@@ -10,6 +10,7 @@ namespace ImageGallery.Controllers
 {
     public class AuthController : Controller
     {
+        //сервис SignInManager, который позволяет аутентифицировать пользователя
         private SignInManager<IdentityUser> _signInManager;
         public AuthController(SignInManager<IdentityUser> signInManager)
         {
@@ -26,6 +27,7 @@ namespace ImageGallery.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel vm)
         {
+            //сервис SignInManager, который позволяет аутентифицировать пользователя
             var result = await _signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);
             return RedirectToAction("Index", "Panel");
         }

@@ -16,6 +16,20 @@ namespace ImageGallery.Controllers
     [Authorize(Roles ="Admin")]
     public class PanelController : Controller
     {
+        //В объявлении поля readonly указывает на то, что присвоение значения полю может
+        //происходить только при объявлении или в конструкторе этого класса.
+        //Полю только для чтения можно несколько раз назначить значения в объявлении 
+        //поля и в конструкторе.
+        //Поле readonly нельзя изменять после выхода из конструктора.Это влечет за собой разные 
+        //последствия для типов значений и ссылочных типов.
+        //Поскольку типы значений содержат данные, поле readonly с типом значения является 
+        //неизменяемым.
+        //Ссылочные типы содержат только ссылку на соответствующие данные, а значит поле 
+        //readonly ссылочного типа будет всегда ссылаться на один объект.Но сам этот 
+        //объект не является неизменяемым. Модификатор readonly запрещает замену 
+        //поля другим экземпляром ссылочного типа.Но этот модификатор не препятствует 
+        //изменению данных экземпляра, на которое ссылается поле только для чтения, в том числе через это поле.
+
         private readonly ApplicationDbContext _context;
         private readonly IUploadInterface _upload;
         public PanelController(ApplicationDbContext context, IUploadInterface upload)
@@ -25,6 +39,7 @@ namespace ImageGallery.Controllers
         }
 
         [HttpGet]
+        //Объект типа IActionResult, которые непосредственно предназначены для генерации результата действия.
         public IActionResult Index()
         {
             var getDetailPicture = _context.ImageDetail.Include(i => i.Category).ToList().OrderByDescending(a => a.ReleaseDate);
@@ -33,6 +48,7 @@ namespace ImageGallery.Controllers
 
 
         [HttpPost]
+        //Объект типа IActionResult, которые непосредственно предназначены для генерации результата действия.
         public async Task<IActionResult> Index(string searchString)
         {
             var image = from i in _context.ImageDetail.Include(p => p.Category)
@@ -49,13 +65,16 @@ namespace ImageGallery.Controllers
 
 
         [HttpGet]
+        //Объект типа IActionResult, которые непосредственно предназначены для генерации результата действия.
         public IActionResult Create()
         {
+            //ViewData представляет словарь из пар ключ-значение: ключ ["CategoryId"] и значение new SelectList.
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
             return View();
         }
 
         [HttpPost]
+        //Объект типа IActionResult, которые непосредственно предназначены для генерации результата действия.
         public IActionResult Create(IList<IFormFile> files, ImageDetail image)
         {
             foreach (var item in files)
@@ -73,6 +92,7 @@ namespace ImageGallery.Controllers
 
 
         [HttpGet]
+        //Объект типа IActionResult, которые непосредственно предназначены для генерации результата действия.
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -91,6 +111,7 @@ namespace ImageGallery.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //Объект типа IActionResult, которые непосредственно предназначены для генерации результата действия.
         public async Task<IActionResult> Edit(int id, ImageDetail imageDetail, IList<IFormFile> files)
         {
             if (id != imageDetail.Id)
@@ -135,6 +156,7 @@ namespace ImageGallery.Controllers
         }
 
         [HttpGet]
+        //Объект типа IActionResult, которые непосредственно предназначены для генерации результата действия.
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -154,6 +176,7 @@ namespace ImageGallery.Controllers
         }
 
         [HttpGet]
+        //Объект типа IActionResult, которые непосредственно предназначены для генерации результата действия.
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -174,6 +197,7 @@ namespace ImageGallery.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        //Объект типа IActionResult, которые непосредственно предназначены для генерации результата действия.
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var pictureDetail = await _context.ImageDetail.FindAsync(id);

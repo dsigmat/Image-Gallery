@@ -8,6 +8,10 @@ using ImageGallery.Models;
 
 namespace ImageGallery.Controllers
 {
+    //ресурсы   https://professorweb.ru
+    //          https://metanit.com
+    //          https://www.youtube.com
+    //книга:    Entity Framework Core 2 для ASP.NET Core MVC автор Adam Freeman 
     public class HomeController : Controller
     {
         public IActionResult Index()
