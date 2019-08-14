@@ -60,22 +60,27 @@ namespace ImageGallery
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // если проект в процессе разработки
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
+                // установка обработчика ошибок
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            // компоненты авторизации пользователя 
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            // установка обработчика статических файлов
             app.UseStaticFiles();
+            // установка GDPR
             app.UseCookiePolicy();
 
+            // Установка компонентов MVC для обработки запроса
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

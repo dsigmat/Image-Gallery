@@ -53,7 +53,7 @@ namespace ImageGallery.Controllers
         {
             var image = from i in _context.ImageDetail.Include(p => p.Category)
             select i;
-             
+
             //оператор выбора
             //если текст не пустой
             if (!String.IsNullOrEmpty(searchString))
